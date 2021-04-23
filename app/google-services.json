@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "313863551667",
+    "project_id": "samp-adr",
+    "storage_bucket": "samp-adr.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:313863551667:android:15a990b2d85e9b78d8cec6",
+        "android_client_info": {
+          "package_name": "com.sap.akos.samp.adr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "313863551667-1e5v5aabtar10qmidasp936sajsv2nsg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0D2bYiGa6-aTbPPrOe9l4YnoQCCAkdg8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "313863551667-1e5v5aabtar10qmidasp936sajsv2nsg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

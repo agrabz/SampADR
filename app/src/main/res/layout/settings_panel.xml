@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="fill_horizontal"
+            android:orientation="horizontal">
+
+            <com.sap.cloud.mobile.fiori.formcell.ChoiceFormCell
+                android:id="@+id/map_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:key="Map Type" />
+
+        </LinearLayout>
+
+        <com.sap.cloud.mobile.fiori.formcell.SwitchFormCell
+            android:id="@+id/use_clustering"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:showText="true"
+            app:key="Clustering"
+            app:value="true" />
+
+    </LinearLayout>
+</ScrollView>

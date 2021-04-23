@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Samp_ADR.iml" filepath="$PROJECT_DIR$/.idea/modules/Samp_ADR.iml" group="Samp_ADR" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="Samp ADR/app" />
+    </modules>
+  </component>
+</project>
