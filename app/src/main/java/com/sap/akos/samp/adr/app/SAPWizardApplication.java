@@ -3,6 +3,8 @@ package com.sap.akos.samp.adr.app;
 import android.app.Application;
 import android.content.SharedPreferences;
 import androidx.preference.PreferenceManager;
+
+import com.sap.akos.samp.adr.R;
 import com.sap.cloud.mobile.foundation.authentication.AppLifecycleCallbackHandler;
 import com.sap.cloud.mobile.foundation.model.AppConfig;
 import com.sap.akos.samp.adr.service.SAPServiceManager;
@@ -99,7 +101,7 @@ public class SAPWizardApplication extends Application {
         sp = PreferenceManager.getDefaultSharedPreferences(this);
         registerActivityLifecycleCallbacks(AppLifecycleCallbackHandler.getInstance());
         initService();
-        clearConsentStatus();
+        //clearConsentStatus();
 
     }
 
@@ -119,7 +121,10 @@ public class SAPWizardApplication extends Application {
         services.add(new LogService());
 
 
-        SDKInitializer.INSTANCE.start(this, services.toArray(new MobileService[0]), null);
+        SDKInitializer.INSTANCE.start(
+                this,
+                services.toArray(new MobileService[0]),
+                getString(R.string.api_key));
     }
 
     /**

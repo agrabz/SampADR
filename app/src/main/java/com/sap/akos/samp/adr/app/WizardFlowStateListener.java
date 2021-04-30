@@ -1,22 +1,41 @@
 package com.sap.akos.samp.adr.app;
 
 import android.content.Intent;
+
 import com.sap.cloud.mobile.flowv2.ext.FlowStateListener;
+import com.sap.cloud.mobile.flowv2.ext.FlowUtilKt;
+import com.sap.cloud.mobile.foundation.common.ClientProvider;
+import com.sap.cloud.mobile.foundation.mobileservices.SDKInitializer;
 import com.sap.cloud.mobile.foundation.model.AppConfig;
+
 import android.content.SharedPreferences;
+
 import com.sap.cloud.mobile.foundation.authentication.AppLifecycleCallbackHandler;
 import com.sap.cloud.mobile.foundation.networking.HttpException;
 import com.sap.cloud.mobile.foundation.settings.policies.ClientPolicies;
 import com.sap.cloud.mobile.foundation.settings.policies.LogPolicy;
+
 import ch.qos.logback.classic.Level;
+
 import android.widget.Toast;
+
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
 import com.sap.akos.samp.adr.R;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import com.sap.cloud.mobile.flowv2.ext.ConsentType;
+
 import kotlin.Pair;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 import java.util.List;
 
 import com.sap.akos.samp.adr.fcm.NotificationUtilities;
@@ -25,6 +44,8 @@ import com.sap.cloud.mobile.foundation.usage.UsageBroker;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import static com.sap.cloud.mobile.flowv2.ext.FlowUtilKt.*;
 
 public class WizardFlowStateListener extends FlowStateListener {
     private static Logger logger = LoggerFactory.getLogger(WizardFlowStateListener.class);
@@ -37,6 +58,27 @@ public class WizardFlowStateListener extends FlowStateListener {
     public WizardFlowStateListener(@NotNull SAPWizardApplication application) {
         super();
         this.application = application;
+    }
+
+    @Override
+    public void onOkHttpClientReady(@NotNull OkHttpClient httpClient) {
+        logger.debug("OkHttpClient is ready...");
+        if (SDKInitializer.INSTANCE.getApiKey() != null) {
+            final String apiKey = SDKInitializer.INSTANCE.getApiKey();
+            Interceptor interceptor = chain -> {
+                Request request = chain.request();
+                Request newRequest = request.newBuilder()
+                        .header(
+                                ClientProvider.HTTP_HEADER_X_API_KEY,
+                                apiKey
+                        )
+                        .build();
+                return chain.proceed(newRequest);
+            };
+            addUniqueInterceptor(httpClient, interceptor);
+        } else{
+            logger.debug("API key is null...");
+        }
     }
 
     @Override
@@ -62,10 +104,10 @@ public class WizardFlowStateListener extends FlowStateListener {
 
     @Override
     public void onFlowFinished(@Nullable String flowName) {
-        if(flowName != null) {
+        if (flowName != null) {
             application.isApplicationUnlocked = true;
         }
-        if(application.notificationMessage != null) {
+        if (application.notificationMessage != null) {
             NotificationUtilities.showNotificationMessage(application.notificationMessage);
         }
     }
@@ -103,9 +145,9 @@ public class WizardFlowStateListener extends FlowStateListener {
                         Toast.LENGTH_SHORT
                 ).show();
                 logger.info(String.format(
-                                application.getString(R.string.log_level_changed),
-                                mapping.get(LogPolicy.getLogLevel(logSettings))
-                        ));
+                        application.getString(R.string.log_level_changed),
+                        mapping.get(LogPolicy.getLogLevel(logSettings))
+                ));
             });
         }
         if (policies.getUsagePolicy() != null) {
@@ -117,6 +159,7 @@ public class WizardFlowStateListener extends FlowStateListener {
             }
         }
     }
+
     private void uploadUsage() {
         UsageBroker.setDaysToWaitBetweenUpload(uploadInterval);
 
@@ -156,7 +199,7 @@ public class WizardFlowStateListener extends FlowStateListener {
     public void onConsentStatusChange(
             @NotNull List<? extends Pair<? extends ConsentType, Boolean>> consents) {
         SharedPreferences sp = application.sp;
-        for( Pair<? extends ConsentType, Boolean> consent: consents ) {
+        for (Pair<? extends ConsentType, Boolean> consent : consents) {
             ConsentType first = consent.getFirst();
             if (first == ConsentType.USAGE) {
                 sp.edit().putBoolean(USAGE_SERVICE_PRE, consent.getSecond()).apply();

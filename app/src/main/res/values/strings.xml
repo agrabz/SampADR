@@ -26,4 +26,6 @@
     <string name="product_categories_title">Product Categories</string>
     <string name="notif_OK_label_all_righty_then">All righty then</string>
     <string name="title_activity_customers_map">Map</string>
+    <!--    DO NOT REPLACE THE DASHES! ANNOTATION ADDED -->
+    <string name="api_key" tools:ignore="TypographyDashes">76345170-dd18-44bc-932e-c4bd01135328</string>
 </resources>
