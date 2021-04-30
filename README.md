@@ -2,7 +2,7 @@
 My SAP BTP SDK for Android Sample
 
 This is a project that I created with the Wizard and customized it based on some Help docs and SAP Tutorials.
-In case you wish to use it, please ping me so I can add you to our BTP subaccount (if justified).
+Currently anyone can use it since "API Key only" is the authentication method - type in anything in the Logon screen e.g. User: "a" and Password: "b". (A passcode is currently still needed.)
 
 Tested with:
 API level 29
